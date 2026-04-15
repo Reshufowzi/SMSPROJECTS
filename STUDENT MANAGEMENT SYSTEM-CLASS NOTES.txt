@@ -1,0 +1,2162 @@
+STUDENT MANAGEMENT SYSTEM
+-------------------------
+CREATE A NEW PROJECT IN PYCHARM NAMED AS Student-Management-System
+
+CREATE A VIRTUAL ENVIRONMENT
+----------------------------
+TERMINAL --> python -m venv djvenv
+
+NEXT WE HAVE TO ACTIVATE THE VIRTUAL ENV TO USE IT;
+
+TERMINAL --> djvenv\scripts\activate
+
+NOW IT IS ACTIVATED...
+
+DJANGO INSTALLATION
+-------------------
+TERMINAL --> pip install django
+
+CREATE PROJECT AND APPS
+------------------------
+PROJECT MEANS - OUR Student management system WEBSITE
+APPS MEANS - EACH COMPONENTS OF THE WEBSITE
+
+CREATE THE SMS PROJECT
+----------------------------
+TERMINAL --> django-admin startproject studentproject
+
+NOW FOLDER CREATED;OUTER AND INNER FOLDER
+
+OUTER - CONTAINER
+INNER - PROJECT FOLDER(CONTAINS FILES)
+
+CREATE APPS
+-----------
+TERMINAL --> cd studentproject
+TERMINAL --> python manage.py startapp student
+
+CREATE A DEVELOPMENT SERVER
+---------------------------
+TERMINAL --> python manage.py runserver 
+
+NOW WE HAVE GOT THE SERVER LINK...
+IT WILL DISPLAY DJANGO DEFAULT WEBSITE...
+
+ONCE WE HAVE CREATED THE HOME APP,WE NEED TO CONNECT WITH THE PROJECT FOLDER...
+
+GO TO PROJECT FOLDER--- SETTINGS.PY---INSTALLED APPS--- 'student'--TO BE ADDED---SAVE
+
+NOW WE CAN ACCESS THE DEFAULT URL...
+
+URLS.PY -->  from django.contrib import admin
+from django.urls import path
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+]
+
+REFRESH THE WEBPAGE ...
+NOW THE ADMIN DEFAULT WEBPAGE CREATED...
+
+THIS IS THE DJANGO ADMINISTRATION DASHBOARD..
+
+CREATE URLS
+-----------
+ROOT URL IS ALWAYS BLANK - ' '
+OUR WEBSITE NAME .COM ITSELF....
+
+urls.py --> 
+
+from django.contrib import admin
+from django.urls import path,include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('',include('student.urls')),
+]
+
+NOW WE NEED TO CREATE A NEW FILE NAMED urls.py IN student FOLDER (INNER FOLDER)...
+
+studentmanagementsystemproject --> student --> new python file --> urls.py
+
+NOW WE NEED TO COPY THE urls.py FROM PROJECT FOLDER AND PASTE IT TO THE NEW urls.py FILE IN THE HOME FOLDER.
+
+DELETE THE ADMIN LINE PATH;
+
+from django.urls import path,include
+from .import views
+
+urlpatterns = [
+    path('',views.index),
+]
+
+NEXT WE NEED TO CREATE THE HOME FUNCTION;
+
+HOME --> VIEWS.PY -->OPEN...
+
+# Create your views here.
+
+LET'S CREATE THE FUNCTIONS;
+---------------------------
+views.py -->
+
+from django.shortcuts import render
+from django.http import HttpResponse
+# Create your views here.
+
+def index(request):
+    return HttpResponse("Welcome Page")
+def home(request):
+    return HttpResponse("Home Page")
+def about(request):
+    return HttpResponse("About Page")
+def department(request):
+    return HttpResponse("Department Page")
+def contact(request):
+    return HttpResponse("Contact Page")
+
+HOME --> urls.py -->
+
+NOW WE NEED TO ADD THE FUNCTIONS HERE;
+
+from django.urls import path,include
+from . import views
+
+
+urlpatterns = [
+    path('',views.index),
+    path('home',views.home),
+    path('about/',views.about),
+    path('department',views.department),
+    path('contact',views.contact),
+
+]
+
+
+NOW WE HAVE CREATED THE WEBPAGES...
+GO TO THE WEB BROWSER AND REFRESH EACH WEBPAGES...
+
+http://127.0.0.1:8000
+http://127.0.0.1:8000/home
+http://127.0.0.1:8000/about
+http://127.0.0.1:8000/department
+http://127.0.0.1:8000/contact
+
+TO CREATE TEMPLATES
+--------------------
+CREATE A NEW FOLDER NAMED templates IN THE PROJECT FOLDER(OUTER)...
+
+studentproject --> new folder --> templates
+
+GO TO THE HOME FOLDER ---> VIEWS.PY --> WE NEED TO ADD THE ARGUMENTS FOR CREATING TEMPLATES...
+
+home --> views.py --> CURRENTLY WE HAV PASSED AS STRINGS....SO WE NEED TO CONVERT IT INTO TEMPLATES...
+
+def index(request):
+    return render(request,'index.html')
+
+GO TO TEMPLATES --> CREATE A NEW FILE NAMED index.html
+
+CREATE DEFAULT HTML STRUCTURE...
+THEN WE NEED TO EDIT TITLE AND ADD HEADING ELEMENTS...
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome</title>
+</head>
+<body>
+<h1>Welcome Page</h1>
+</body>
+</html>
+
+THIS IS OUR INDEX HTML WEBPAGE...
+SO NW WE NEE DTO ADD THIS TEMPLATE FOLDER TO SETTINGS...
+
+GO TO PROJECT FOLDER(INNER) --> studentproject --> settings.py -->
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [templates],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+
+NOW REFRESH THE WEBPAGE...U WILL SEE THE TITLE AND H1 ELEMENT...
+ALSO RIGHT CLICK THE WEBPAGE TO VIEW PAGE SOURCE..
+
+NOW WE HAVE CREATED OUR FIRST TEMPLATE....SIMILARLY WE NEED TO CREATE FOR THE REST PAGES...
+
+GO TO TEMPLATES --> NEW FILE --> about.html --> html basic structure -->add title and h1 element
+GO TO TEMPLATES --> NEW FILE --> department.html --> html basic structure -->add title and h1 element
+GO TO TEMPLATES --> NEW FILE --> contact.html --> html basic structure -->add title and h1 element
+
+GO TO views.py -->
+
+def index(request):
+    return render(request,'index.html')
+def home(request):
+    return render(request,'home.html')
+def about(request):
+    return render(request,'about.html')
+def department(request):
+    return render(request,'department.html')
+def contact(request):
+    return render(request,'contact.html')
+
+CREATE HTML FILE FOR HOME 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+<h1>Home Page</h1>
+</body>
+</html>
+
+CREATE HTML FILE FOR ABOUT 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About</title>
+</head>
+<body>
+<h1>About Page</h1>
+</body>
+</html>
+
+similarly....
+
+VARIABLES AND TAGS
+------------------
+
+VARIABLES AND TAGS
+-------------------
+VARIABLES - {{ }}
+TAGS - {% %}
+
+GO TO VIEWS.PY -->
+
+CREATE VARIABLES TO THE student APP...
+
+FOR EG:
+
+from django.http import HttpResponse
+from django.shortcuts import render
+# Create your views here.
+
+def index(request):
+    return render(request,'index.html')
+def home(request):
+    x = {
+        'NAME': "ANU",
+        'AGE': 32,
+        'PLACE': 'CHENNAI'
+    }
+    return render(request,'home.html',x)
+WE CAN CREATE AS DICTIONARY...
+
+THEN WE HAV TO PASS THIS VARIABLE AS ARGUMENT TO OUR HTML FILE...
+
+GO TO TEMPLATES FOLDER --> HOME.HTML
+
+ADD HEADING TAG ELEMENTS FOR NAME,AGE,PLACE...
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+<h1>Home Page</h1>
+
+<H2> NAME IS {{ NAME}} </H2>
+<H2> AGE IS {{ AGE}} </H2>
+<H2> PLACE IS {{ PLACE}} </H2>
+
+</body>
+</html>
+
+SEE HOW WE HAV CREATED THE VARIABLES...
+
+HOW TO CREATE TAGS
+-------------------
+
+studentproject --> home--> views.py --> 
+
+def index(request):
+    return render(request,'index.html')
+def home(request):
+    numbers = {
+        'number1' : 10,
+    }
+    return render(request,'home.html',numbers)
+
+TEMPLATES --> HOME.HTML-->DELETE THE EXISTING HEADING ELEMENTS
+
+REPLACE WITH ;
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+<h1>Home Page</h1>
+{% if  number1 > 0 %}
+<H2> POSITIVE NUMBER </H2>
+{% endif %}
+</body>
+</html>
+
+NOW REFRESH UR PAGES...
+
+IF WE HAV EDIT THE NUMBER AS NEGATIVE VALUES;
+
+IT WILL REMAIN BLANK...SO WE NEE DTO ADD ELSE BLOCK...
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+<h1>Home Page</h1>
+{% if  number1 > 0 %}
+<H2> POSITIVE NUMBER </H2>
+{% elif number1 < 0 %}
+<h2> NEGATIVE NUMBER</h2>
+{% endif %}
+</body>
+</html>
+
+views.py -->
+
+def index(request):
+    return render(request,'index.html')
+def home(request):
+    numbers = {
+        'number1' : -10,
+    }
+    return render(request,'home.html',numbers)
+
+NOW REFRESH UR PAGE...
+
+SUPPOSE WE ARE INPUTTING 0 ;
+
+home.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+<h1>Home Page</h1>
+{% if  number1 > 0 %}
+<H2> POSITIVE NUMBER </H2>
+{% elif number1 < 0 %}
+<h2> NEGATIVE NUMBER</h2>
+{% else %}
+<h2> NUMBER IS ZERO</h2>
+{% endif %}
+</body>
+</html>
+
+views.py --> 
+
+def index(request):
+    return render(request,'index.html')
+def home(request):
+    numbers = {
+        'number1' : 0,
+    }
+    return render(request,'home.html',numbers)
+
+
+EVEN or ODD
+-----------
+views.py -- >
+
+def department(request):
+    num = 11
+    if num % 2 == 0:
+        res = f"{num} is Even Number"
+    else:
+        res = f"{num} is Odd Number"
+    return render(request,'department.html',{'output':res})
+
+department.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Department</title>
+</head>
+<body>
+<h1>Welcome to Department Page</h1>
+<h1> {{output}} </h1>
+</body>
+</html>
+
+
+FOR LOOP TAGS
+-------------
+
+EXAMPLE -1 
+---------
+
+views.py --> 
+
+CREATE NUMBERS AS A LIST....
+
+def index(request):
+    return render(request,'index.html')
+def home(request):
+    numbers = {
+        'number1' : [1,2,3,4,5,6,7,8,9,10],
+    }
+    return render(request,'home.html',numbers)
+
+home.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+<h1>Home Page</h1>
+{% for i in number1 %}
+<h2>{{i}}</h2>
+{% endfor %}
+</body>
+</html>
+
+
+EXAMPLE -2
+-----------
+
+views.py -->
+
+
+def index(request):
+    return render(request,'index.html')
+def home(request):
+    x = {
+        'fruits' : ['apple','banana','cherry'],
+    }
+    return render(request,'home.html',x)
+
+
+home.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+<h1>Home Page</h1>
+{% for i in fruits %}
+<h2>{{i}}</h2>
+{% endfor %}
+</body>
+</html>
+
+Template Inheritance
+---------------------
+Allows you to build a base template that contains all the common elements of your site and defines blocks that child templates can override.
+
+
+Inheritance : {% extends "base.html" %}
+Blocks : 
+{% block title %} {% endblock %}
+{% block content %} {% endblock %}
+
+
+go to index.html --> All the contents are same as of other html files...
+
+So we need to create base.html file ...
+templates --> create --> base.html --> basic html structure
+
+<title> {% block title %} {% endblock %} </title>
+
+<body> 
+
+<h1 style="color:red;">Hello....Welcome to Base Html</h1>
+{% block content %} {% endblock %}
+
+go to index.html -->select all --> delete
+
+{% extends 'base.html' %}
+
+Now refresh the webpage...u can see the red color tag...
+
+go to index.html --> add blocks
+
+{% extends 'base.html' %}
+
+{% block title  %}
+Home
+{% endblock %}
+
+{% block content  %}
+<h1> Home Page  </h1>
+{% endblock %}
+
+
+Now we have created the title and content blocks....
+
+Now go to about.html --> copy the code from index.html and paste to about.html
+
+about.html --> 
+
+{% extends 'base.html' %}
+
+{% block title  %}
+About
+{% endblock %}
+
+{% block content  %}
+<h1> About Page  </h1>
+{% endblock %}
+
+similarly we can create on contact,department
+
+Now i have created a base.html using bootstrap...
+named as dummy_base.html
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <meta charset="utf-8">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet"
+      href=" https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css ">
+    <link rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+
+  </head>
+
+  <body>
+
+    <nav class="navbar bg-primary navbar-expand-md ">
+      <div class="container">
+        <div class="col-2 text-left pl-md-0">
+          <h3 class="text-black">Student Management System </h3>
+        </div>
+        
+        <div
+          class="collapse navbar-collapse justify-content-center col-md-8 navbar-collapse-3">
+          <ul class="navbar-nav justify-content-center  fw-bold">
+            <li class="nav-item active">
+              <a class="nav-link text-black" href="#">Home </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-black" href="#">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-black" href="#">Department</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-black" href="#">Contact</a>
+            </li>
+          </ul>
+        </div>
+        
+      </div>
+    </nav>
+
+	
+    <section class="fixed-bottom">
+      <footer class="pt-2 pb-2  bg-primary text-dark">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-12 col-md-8">
+              <h4>Emergency Contact Number: 0123456789</h4>
+            </div>
+            <div class="col-12 col-md-4 mt-4 mt-md-0 text-center text-md-end">
+              © 2025 studentmanagementsystem. All Rights Reserved
+            </div>
+          </div>
+        </div>
+      </footer>
+    </section>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"></script>
+
+
+  </body>
+
+</html>
+
+Now copy paste that dummy_base to index.html 
+
+Now refresh u can see the bootstrap layout...
+
+Now we need to add title block and content block...
+
+copy the title block from index.html paste it into the dummy_base.html file title tag
+
+{% block title  %}
+Home
+{% endblock %}
+
+copy the content block from index.html paste it into the dummy_base.html file content tag
+
+{% block content  %}
+<h1> Home Page  </h1>
+{% endblock %}
+
+Now refresh the index page...
+
+index.html -->
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>{% block title  %}
+Home
+{% endblock %}</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet"
+      href=" https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css ">
+    <link rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+
+  </head>
+
+  <body>
+
+    <nav class="navbar bg-primary navbar-expand-md ">
+      <div class="container">
+        <div class="col-2 text-left pl-md-0">
+          <h3 class="text-black"> Student Management System </h3>
+        </div>
+        
+        <div
+          class="collapse navbar-collapse justify-content-center col-md-8 navbar-collapse-3">
+          <ul class="navbar-nav justify-content-center  fw-bold">
+            <li class="nav-item active">
+              <a class="nav-link text-black" href="#">Home </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-black" href="#">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-black" href="#">Department</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-black" href="#">Contact</a>
+            </li>
+          </ul>
+        </div>
+        
+      </div>
+    </nav>
+
+
+{% block content  %}
+<h1> Home Page  </h1>
+{% endblock %}
+	
+    <section class="fixed-bottom">
+      <footer class="pt-2 pb-2  bg-primary text-dark">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-12 col-md-8">
+              <h4>Emergency Contact Number: 0123456789</h4>
+            </div>
+            <div class="col-12 col-md-4 mt-4 mt-md-0 text-center text-md-end">
+              © 2025 studentmanagementsystem. All Rights Reserved
+            </div>
+          </div>
+        </div>
+      </footer>
+    </section>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"></script>
+
+
+  </body>
+
+</html>
+
+dummy_base.html -->
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>{% block title  %}
+Home
+{% endblock %}</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet"
+      href=" https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css ">
+    <link rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+
+  </head>
+
+  <body>
+
+    <nav class="navbar bg-primary navbar-expand-md ">
+      <div class="container">
+        <div class="col-2 text-left pl-md-0">
+          <h3 class="text-black"> E-Commerce </h3>
+        </div>
+
+        <div
+          class="collapse navbar-collapse justify-content-center col-md-8 navbar-collapse-3">
+          <ul class="navbar-nav justify-content-center  fw-bold">
+            <li class="nav-item active">
+              <a class="nav-link text-black" href="#">Home </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-black" href="#">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-black" href="#">Product</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-black" href="#">Contact</a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+{% block content  %}
+<h1> Home Page  </h1>
+{% endblock %}
+	
+    <section class="fixed-bottom">
+      <footer class="pt-2 pb-2  bg-primary text-dark">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-12 col-md-8">
+              <h4>Emergency Contact Number: 0123456789</h4>
+            </div>
+            <div class="col-12 col-md-4 mt-4 mt-md-0 text-center text-md-end">
+              © 2025 E-Commerce. All Rights Reserved
+            </div>
+          </div>
+        </div>
+      </footer>
+    </section>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"></script>
+
+
+  </body>
+
+</html>
+
+next we need to add this to similar pages using extends ...
+
+about.html -->
+
+{% extends 'dummy_base.html' %}
+
+{% block title  %}
+About
+{% endblock %}
+
+{% block content  %}
+<h1> About Page  </h1>
+{% endblock %}
+
+department.html -->
+
+{% extends 'dummy_base.html' %}
+
+{% block title  %}
+Department
+{% endblock %}
+
+{% block content  %}
+<h1> Department Page  </h1>
+{% endblock %}
+--------------------------------------------------------------------------
+
+Django’s runserver binds to a host:port.
+If both projects use the same host:port you will see the same output
+
+Project A: python manage.py runserver 8000
+
+Project B: python manage.py runserver 8001
+
+--------------------------------------------------------------------
+
+Go to urls.py -->
+
+from django.urls import path,include
+from . import views
+
+
+urlpatterns = [
+    path('',views.index,name='index'),
+    path('home',views.home,name='home'),
+    path('about/',views.about,name='about'),
+    path('department',views.department,name='department'),
+    path('contact',views.contact,name='contact'),
+
+]
+
+
+Go to dummy_base.html --> need to add urls to href attribute
+
+<a class="nav-link text-black" href="{% url 'home' %}">Home </a>
+<a class="nav-link text-black" href="{% url 'about' %}">About</a>
+<a class="nav-link text-black" href="{% url 'department' %}">Department</a>
+<a class="nav-link text-black" href="{% url 'contact' %}">Contact</a>
+
+Now refresh each buttons...
+
+Admin interface
+---------------
+It allows to create ,edit and publish content,manage the website users and performs other administrative tasks.
+
+Create an admin user : python manage.py createsuperuser
+
+Go to url -- > http://127.0.0.1:8001/admin
+
+Admin dashboard will display...There we have to create the username and password...
+
+Go to terminal --> python manage.py createsuperuser
+
+It will shows an error
+
+we have run migrate command
+
+Go to terminal --> python manage.py makemigrations
+
+No changes detected
+
+Go to terminal --> python manage.py migrate
+
+all migrations applied 
+
+Go to terminal --> python manage.py createsuperuser
+
+Now user will ask the username and password to create .....
+
+create user name : admin
+create email id : admin@gmail.com
+create password : admin123
+re enter password : admin123
+validation : y
+
+Now we created the superuser successfully...
+
+Now refresh the webpage and login ....
+
+Admin panel will display...
+
+Django administration panel will display.....
+
+Users --> add --> username --> user1 --> password --> userpswd123 --> save...
+
+Permissions --> staff status -->enable -->save
+
+logout --> login --> user1 / userpswd123 --->nopermissions
+
+Django Static Files
+--------------------
+Aside from the HTML generated by the server,web apps 
+generally need to serve additional files like images,
+Javascript or CSS,necessary to render the complete webpage...
+
+In Django,we refer to these files as 'static files'...
+
+Outer folder --> create a folder named static-->
+
+Inside static folder --> create 3 sub folders named as --> css,js,images
+
+Now we are going to create stylings to the menus...
+
+static --> css --> create a file named as style.css
+
+li:hover{
+    background-color:red;
+    border-radius:10px;
+    border:5px solid yellow;
+}
+
+we are going to add hover styling....
+hover -- When you move your cursor over the menus, its background changes...
+
+Now we need to add this static file to settings.py...
+
+settings.py --> 
+
+STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR,'static')
+]
+
+templates --> dummy_base.html -->
+
+{% load static %} add to the top...
+
+we need to link the css file,so....
+
+ <link rel="stylesheet"
+      href = "{% static '/css/style.css' %}">
+
+save this...now refresh the webpage...When u move the cursor...
+
+Now we can add images...
+
+just google any 3 images relevant to our project...
+
+add the images to images folder in our project....
+
+now we added the images to our project folder...
+
+go to index.html -->
+
+remove the h1 element of content block...
+instead we are going to add the images...
+
+Now we are going to add basic carousel templates to our project...
+
+already we have the carousel...just need to copy paste the template...
+
+
+
+<div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active" data-bs-interval="10000">
+      <img src="car1.jpg"" class="d-block w-100" alt="...">
+      <
+    </div>
+    <div class="carousel-item" data-bs-interval="2000">
+      <img src="car2.jpg" class="d-block w-100" alt="...">
+      
+    </div>
+    <div class="carousel-item">
+      <img src="car3.jpg"" class="d-block w-100" alt="...">
+      
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+
+edit img src attributes to -->
+
+<img src="{% static '/images/car-1.jpg' %}"
+
+<img src="{% static '/images/car-2.jpg' %}"
+
+<img src="{% static '/images/car-3.jpg' %}"
+
+also add the load static tag...on top...
+
+{% load static %}
+
+now refresh the webpage to see the carousel templated webpage...
+
+Django - Models
+---------------
+
+A Django model is a class that represents table in our Database.
+
+Django create a database when we create the project.
+
+Models are defined in the app/models.py
+
+Django - builtin SQLite database available...
+
+
+Go to project --> db.sqlite3 available(builtin)
+
+It is a powerful tool...We just need to create class regarding the database....
+
+We are going to create tables for our project...
+
+Department
+----------
+dep_name
+dep_description
+
+Let's create model
+-------------------
+Go to student(app) --> models.py --> create ur models here -->
+
+now we are going to create department models;
+
+from django.db import models
+
+# Create your models here.
+
+class Department(models.Model):
+    dep_name = models.CharField(max_length=100)
+    dep_description = models.TextField()
+
+Model name = Department
+base class = models.Model
+
+we hav 2 fields;
+
+dep_name and dep_description
+
+we have to initialize each attributes;
+
+dep_name = models.CharField(max_length=100)
+
+dep_name - field 1
+models.CharField - we can store upto 255 characters 
+(max_length=100)- limit setting
+
+dep_description - field 2
+models.TextField() - We can store more than 255 characters
+
+So now we need to migrate...
+
+If we are creating models or model regarding updates, we need to migrate.... 
+
+terminal --> clear
+
+python manage.py makemigrations
+
+No changes detected...
+Ctrl + Save
+
+python manage.py makemigrations
+
+Migrations for 'student':
+  student\migrations\0001_initial.py
+    + Create model Department
+
+python manage.py migrate
+
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, sessions, student
+Running migrations:
+  Applying student.0001_initial... OK
+
+Go to student(app) --> migrations --> 0001_initial.py --> there u will see the attributes we have created...
+
+(id is default created by Django)
+
+Go to webpage --> http://127.0.0.1:8000/admin
+
+enter ur username and password
+
+Now we need to register our newly created models...
+
+Go to student(app) --> admin.py -->
+
+from django.contrib import admin
+
+# Register your models here.
+
+add the model here;
+
+from django.contrib import admin
+from .models import Department
+# Register your models here.
+
+admin.site.register(Department)
+
+Save this ...
+
+Now refresh ur webpage...
+
+There we can see the department tab --> add -->dep_name and dep_description will display...
+
+Next we are going to add dep_name and dep_description ...
+
+dep_name = Python Full Stack
+dep_description = Python full stack refers to the use of Python and its associated frameworks and libraries to develop both the front-end (client-side) and back-end (server-side) components of a web application. A Python full-stack developer possesses the skills and knowledge to work across the entire web development stack. 
+
+Now we have added them...Save...
+
+Now we can see the object we have created....
+
+Next we need to add this content in our webpage...
+
+We need to add div element for displaying the content...
+
+Go to webpage --> http://127.0.0.1:8000/department
+
+Go to department.html -->
+
+adding a horizontal line to h1 element..
+
+The <hr> tag stands for horizontal rule....
+
+<h1> Department Page  </h1>
+<hr style="border: 5px solid blue; width: 100%;">
+
+Next align the h1 element to center...
+
+using bootstrap -->
+
+<h1 class ="text-center"> Department Page  </h1>
+
+Now it is center aligned...
+
+Next we add div element...for creating h1 and p tags...
+
+<div>
+    <h1>Department Name</h1>
+    <p>Department Description</p>
+</div> 
+
+Now we have created the div element ...
+
+{% extends 'dummy_base.html' %}
+{% block title  %}
+Department
+{% endblock %}
+{% block content  %}
+<h1 class ="text-center"> Department Page  </h1>
+<hr style="border: 5px solid blue; width: 100%;">
+<div>
+    <h1>Department Name</h1>
+    <p>Department Description</p>
+</div>
+{% endblock %}
+
+Next we are going to styling the h1 and p tags using bootstrap...
+
+<div class="mx-auto w-50 bg-success text-center text-white p-3 my-3">
+
+mx-auto --> Horizontal margin auto -->Centers the <div> horizontally within its container.
+
+w-50 --> Width 50% --> The div will occupy 50% of the parent container’s width.
+
+bg-success --> Background color (success) --> Applies a green background (Bootstrap’s success color).
+
+text-center --> Text alignment center --> Centers all text inside the <div>.
+
+text-white --> White text color	--> Makes the text color white.
+
+p-3 --> Padding size 3	--> Adds internal spacing (padding) inside the <div>.
+
+my-3 --> Margin on top & bottom (Y-axis) --> Adds space above and below the <div>
+
+| Class          | Color Description       | Example                |
+| -------------- | ----------------------- | ---------------------- |
+| bg-primary     | Blue (main theme color) | 🔵                     |
+| bg-secondary   | Gray                    | ⚪                     |
+| bg-success     | Green                   | 🟩                     |
+| bg-danger      | Red                     | 🟥                     |
+| bg-warning     | Yellow / Orange         | 🟧                     |
+| bg-info        | Light Blue / Cyan       | 🟦                     |
+| bg-light       | Very light gray         | ⚪                     |
+| bg-dark        | Black / Dark Gray       | ⚫                     |
+| bg-white       | Pure white              | ⚪ 		    |
+
+| Class          | Color Description |
+| ---------------| ----------------- |
+| text-primary   | Blue              |
+| text-secondary | Gray              |
+| text-success   | Green             |
+| text-danger    | Red               |
+| text-warning   | Yellow            |
+| text-info      | Light Blue        |
+| text-light     | White             |
+| text-dark      | Black             |
+
+Now we need to add the Department name and description...
+
+go to views.py -->
+
+need to import the model...
+
+from .models import Department
+
+def department(request):
+    dict_dept={
+        'dept' : Department.objects.all()
+    }
+    return render(request,'department.html',dict_dept)
+
+Department.objects.all()-->retrieves all records (rows) from the Department model/table in your database.
+
+go to department.html -->
+
+We have multiple departments so we use loop to iterate each departments...
+
+{% extends 'dummy_base.html' %}
+
+{% block title  %}
+Department
+{% endblock %}
+
+{% block content  %}
+<h1 class ="text-center"> Department Page  </h1>
+<hr style="border: 5px solid blue; width: 100%;">
+
+{% for d in dept %}
+
+<div class="mx-auto w-50 bg-success text-center text-white p-3 my-3">
+    <h1>{{d.dep_name}}</h1>
+    <p>{{d.dep_description}}</p>
+</div>
+{% endfor %}
+
+{% endblock %}
+
+Now refresh the webpage...it will display the content...
+
+We can add more departments like this...
+
+------------------------------------------------------------------------------
+
+Now we are going to add one more menu to our project...
+
+'placementcell'
+
+We need to create placementcell.html file,url,views fns...
+
+urls.py -->
+
+from django.urls import path,include
+from . import views
+
+
+urlpatterns = [
+    path('',views.index,name='index'),
+    path('home',views.home,name='home'),
+    path('about/',views.about,name='about'),
+    path('department',views.department,name='department'),
+    path('placementcell',views.placementcell,name='placementcell'),
+    path('contact',views.contact,name='contact'),
+
+]
+
+views.py -->
+
+def placementcell(request):
+    return render(request,'placementcell.html')
+
+create a html file...named placementcell.html
+
+{% extends 'dummy_base.html' %}
+
+{% block title  %}
+PlacementCell
+{% endblock %}
+
+{% block content  %}
+<h1> PlacementCell Page  </h1>
+{% endblock %}
+
+add li tag for placementcell in dummy_base.html
+
+<li class="nav-item">
+              <a class="nav-link text-black" href="{% url 'placementcell' %}">Placementcell</a>
+            </li>
+
+
+Now we have created the new menu in our project...
+
+now we are going to add model placementcell...
+
+placementcell
+-------------
+student_name ---> field1
+student_image --> field2
+dep_name -------> field3
+
+Go to student(app) --> models.py -->
+
+class Placementcell(models.Model):
+    student_name = models.CharField(max_length=50)
+    student_image = models.ImageField(u='placementcell')
+    dep_name = models.ForeignKey(Department,on_delete=models.CASCADE)
+pload_to
+There will raise an error in terminal regarding image preprocessing library to be installed...
+
+ERRORS:
+student.Placementcell.student_image: (fields.E210) Cannot use ImageField because Pillow is not installed.
+        HINT: Get Pillow at https://pypi.org/project/Pillow/ or run command "python -m pip install Pillow".
+
+
+we need to install pillow library...
+
+python -m pip install Pillow
+
+After installing pillow library;
+
+studentproject --> settings.py --> 
+
+We need to configure few items to the bottom of the file;
+
+MEDIA_ROOT = BASE_DIR / 'uploads'
+MEDIA_URL = '/media/'
+
+Go to studentproject --> urls.py -->
+
+from django.contrib import admin
+from django.urls import path,include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('',include('student.urls')),
+] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+
+
+we need to import settings modules;
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+Now we need to migrate our model;
+
+terminal --> python manage.py makemigrations
+
+terminal --> python manage.py migrate
+
+Next we need to register -->
+
+Go to student(app) --> admin.py -->
+
+from django.contrib import admin
+from .models import Department,Placementcell
+# Register your models here.
+
+admin.site.register(Department)
+admin.site.register(Placementcell)
+
+Now run the server -->http://127.0.0.1:8008/admin
+
+We will see the placementcell model added there...
+
+Now we can see the fields we have added...
+
+There will be Dep name listed as objects ...it is our foreign key also so now we need to add department name instead of objects...
+
+Go to student(app) --> models.py --> add __str__
+
+from django.db import models
+
+# Create your models here.
+
+class Department(models.Model):
+    dep_name = models.CharField(max_length=100)
+    dep_description = models.TextField()
+
+    def __str__(self):
+        return self.dep_name
+
+class Placementcell(models.Model):
+    student_name = models.CharField(max_length=50)
+    student_image = models.ImageField(upload_to='placementcell')
+    dep_name = models.ForeignKey(Department,on_delete=models.CASCADE)
+
+Now refresh ur webpage...
+
+Now we are going to add the fields;
+
+After updating fields we need to add views fn;
+
+views.py -->
+
+def placementcell(request):
+    dict_place = {
+        'placementcell' : Placementcell.objects.all()
+    }
+    return render(request,'placementcell.html',dict_place)
+
+Go to placementcell.html-->
+
+add a div element -->
+
+{% extends 'dummy_base.html' %}
+
+{% block title  %}
+PlacementCell
+{% endblock %}
+
+{% block content  %}
+<h1> PlacementCell Page  </h1>
+<div class="container">
+{% for d in placementcell %}
+
+<h1>{{d.student_name}}</h1>
+
+{% endfor %}
+
+</div>
+{% endblock %}
+
+
+We need to customize the layout using bootstrap -->
+
+Go to google --> bootstrap --> Docs --> Components---> Cards -->
+
+copy the card layout --> paste it into placementcell.html -->
+
+we dont need the button...so remove the <a> tag attribute...
+
+Then we need to add the title card...
+
+<h5 class="card-title">{{d.student_name}}</h5>
+
+Then we need to add the text card as...
+
+<p class="card-text">{{d.dep_name}}</p>
+
+add image-->
+
+<img src="{{d.student_image.url}}" class="card-img-top" alt="...">
+
+{% extends 'dummy_base.html' %}
+
+{% block title  %}
+PlacementCell
+{% endblock %}
+
+{% block content  %}
+<h1> PlacementCell Page  </h1>
+<div class="container">
+{% for d in placementcell %}
+
+<h1>{{d.student_name}}</h1>
+<div class="card text-center" style="width: 18rem;">
+  <img src="{{d.student_image.url}}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{d.student_name}}</h5>
+    <p class="card-text">{{d.dep_name}}</p>
+  </div>
+</div>
+
+{% endfor %}
+
+</div>
+{% endblock %}
+
+Now refresh ur webpage...
+
+
+{% block content  %}
+<h1> PlacementCell Page  </h1>
+<div class="container text-center">
+{% for d in placementcell %}
+
+
+<h1>{{d.student_name}}</h1>
+<div class="card text-center" style="width: 18rem;display:inline-block">
+{% block content  %}
+<h1> PlacementCell Page  </h1>
+<div class="container text-center bg-warning">
+
+--------------------------------------------------------------------------------
+
+placementcell.html -->
+
+{% extends 'dummy_base.html' %}
+
+{% block title  %}
+PlacementCell
+{% endblock %}
+
+{% block content  %}
+<h1 class = 'text-center'> PlacementCell Page  </h1>
+<div class="container text-center bg-dark">
+{% for d in placementcell %}
+
+<!--<h1>{{d.student_name}}</h1>-->
+<div class="card text-center mx-3 my-3" style="width: 18rem;display:inline-block">
+  <img src="{{d.student_image.url}}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{d.student_name}}</h5>
+    <p class="card-text">{{d.dep_name}}</p>
+  </div>
+</div>
+
+{% endfor %}
+
+</div>
+{% endblock %}
+-----------------------------------------------
+To create fixed bottom for the webpage ;
+go to dummy_base.html --> section class = " " leave it as blank
+
+{% block content  %}
+<h1> Home Page  </h1>
+{% endblock %}
+    <section class="fixed-bottom">
+      <footer class="pt-2 pb-2  bg-primary text-dark">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-12 col-md-8">
+              <h4>Emergency Contact Number: 0123456789</h4>
+            </div>
+            <div class="col-12 col-md-4 mt-4 mt-md-0 text-center text-md-end">
+              © 2025 students. All Rights Reserved
+            </div>
+          </div>
+        </div>
+      </footer>
+    </section>
+
+Now refresh ur webpage...
+
+----------------------------------------------
+Next we are going to create a form...for searching student details...
+
+add a new menu named 'search' ....
+
+We need to create search.html file,url,views fns...
+
+urls.py -->
+
+from django.urls import path,include
+from . import views
+
+
+urlpatterns = [
+    path('',views.index,name='index'),
+    path('home',views.home,name='home'),
+    path('about/',views.about,name='about'),
+    path('search',views.search,name='search'),
+    path('department',views.department,name='department'),
+    path('placementcell',views.placementcell,name='placementcell'),
+    path('contact',views.contact,name='contact'),
+
+]
+
+views.py -->
+
+def search(request):
+    return render(request,'search.html')
+
+create a html file...named search.html
+
+{% extends 'dummy_base.html' %}
+
+{% block title  %}
+Search
+{% endblock %}
+
+{% block content  %}
+<h1> Search Page  </h1>
+{% endblock %}
+
+add li tag for search in dummy_base.html
+
+<li class="nav-item">
+              <a class="nav-link text-black" href="{% url 'search' %}">Search</a>
+            </li>
+
+
+Now we have created the new menu in our project...
+
+Search
+------
+student_name
+student_phonenumber
+student_email
+student_image
+
+Going to create a model -->
+
+Go to models.py -->
+
+class Search(models.Model):
+    student_name = models.CharField(max_length=50)
+    student_phonenumber = models.CharField(max_length=10)
+    student_email = models.EmailField()
+    student_image = models.ForeignKey(Placementcell,on_delete=models.CASCADE)
+
+Go to terminal -->
+
+python manage.py makemigrations
+
+python manage.py migrate
+
+Next we need to register -->
+
+Go to student(app) --> admin.py -->
+
+from django.contrib import admin
+from .models import Department,Placementcell,Search
+# Register your models here.
+
+admin.site.register(Department)
+admin.site.register(Placementcell)
+admin.site.register(Search)
+
+Now run the server -->http://127.0.0.1:8000/admin
+
+We will see the search model added there...
+
+Now we can see the fields we have added... 
+
+studentimage -->
+
+we need to combine student image with depname;
+
+models.py -->
+
+from django.db import models
+
+# Create your models here.
+class Department(models.Model):
+    dep_name = models.CharField(max_length=100)
+    dep_description = models.TextField()
+
+    def __str__(self):
+        return self.dep_name
+
+class Placementcell(models.Model):
+    student_name = models.CharField(max_length=50)
+    student_image = models.ImageField(upload_to='placementcell')
+    dep_name = models.ForeignKey(Department,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.student_name+ " - " +str(self.dep_name)
+
+class Search(models.Model):
+    student_name = models.CharField(max_length=50)
+    student_phonenumber = models.CharField(max_length=10)
+    student_email = models.EmailField()
+    student_image = models.ForeignKey(Placementcell,on_delete=models.CASCADE)
+
+now refresh ur webpage...
+
+Now we need to add this form to search menu...
+
+go to student(app) --> create a new py file named forms.py
+
+from django import forms
+
+from .models import Search
+
+class SearchForm(forms.ModelForm):
+    class Meta:
+        model = Search
+        fields = '__all__'
+
+
+views.py  -->
+
+from .forms import SearchForm
+
+def search(request):
+    form = SearchForm
+    return render(request,'search.html')
+
+now we need to add a dict to pass it...
+
+def search(request):
+    form = SearchForm
+    dict_form = {
+        'form':form
+    }
+    return render(request,'search.html',dict_form)
+
+go to search.html -->
+
+add a form tag to create form templates to the search page...
+
+{% extends 'dummy_base.html' %}
+
+{% block title  %}
+Search
+{% endblock %}
+
+{% block content  %}
+<h1> Search Page  </h1>
+
+<form action="">
+    {{form.as_p}}
+</form>
+{% endblock %}
+
+now refresh ur webpage...http://127.0.0.1:8000/search
+
+<h1> Students Portal  </h1> #rename the h1 element
+<hr> #add a horizontal rule
+
+<h1 class="text-center"> Students Portal  </h1>
+
+add a div element for form tag;
+
+now refresh ur page...
+
+now we are going to add a button 'submit'...
+
+add button tag inside form tag...
+
+<div class = "container w-50 text-center my-5">
+    <form action="">
+    {{form.as_p}}
+
+        <button type="submit">Submit</button>
+</form>
+</div>
+
+Now are going to styling the form...
+
+We need to install a package for styling ...It will be very easy to style the webpages...
+
+package name - Django crispy forms
+
+go to google --> Django crispy forms
+
+we need to install it...
+
+terminal --> pip install django-crispy-forms
+terminal --> pip install crispy_bootstrap4
+
+next we need to add this package to settings.py 
+
+settings.py --> installed apps --> add 'crispy_forms','crispy_bootstrap4', --> save 
+
+next we need to add the template pack into the settings as we created for static...
+
+we can set the default template pack for your project using the CRISPY_TEMPLATE_PACK Django settings variable
+
+settings.py --> 
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+we are using bootstrap4...
+
+Crispy filter lets you render a form or formset using django-crispy-forms elegantly div based fields.
+
+{% load crispy_forms_tags %}
+
+add this to search.html
+
+{% extends 'dummy_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title  %}
+Search
+{% endblock %}
+{% block content  %}
+<h1 class="text-center"> Students Portal  </h1>
+<hr>
+<div class = "container w-50 text-center">
+    <form action="">
+    {{form.as_p}}
+
+        <button type="submit">Submit</button>
+</form>
+</div>
+{% endblock %}
+
+
+Append the |crispy filter to your form or formset context variable
+
+{{form.as_p}} --> replace as --> {{form|crispy}}
+
+Now refresh ur webpage...Now we have created the form styling using bootstrap...
+
+Now we need to style the button also,
+
+add a br tag and style the button;
+
+<div class = "container w-50 text-center">
+    <form action="">
+    {{form|crispy}}
+    <br>
+        <button class="btn btn-primary" type="submit">Submit</button>
+<hr>
+</form>
+</div>
+
+Now refresh ur page...
+
+we can add background ;
+
+<div class = "container w-25 text-center bg-danger">
+
+Now we are going to change our field names;
+
+Go to forms.py -->
+
+add a dictionary for form labels;
+
+from django import forms
+
+from .models import Search
+
+class SearchForm(forms.ModelForm):
+    class Meta:
+        model = Search
+        fields = '__all__'
+
+        labels = {
+            'student_name' : 'Student Full Name :',
+            'student_phonenumber' : 'Student Contact Details :',
+            'student_email' : 'Student Email Address :',
+            'student_image' : 'Upload Student Image :',
+        }
+
+Now refresh ur webpage...
+
+<div class = "container w-50 text-center p-3 my-5 bg-danger">
+    <form action="">
+    {{form|crispy}}
+    <br>
+        <button class="btn btn-primary mb-4" type="submit">Submit</button>
+        <hr>
+</form>
+</div>
+
+Next we are adding datas to our database;
+
+In web development, when you submit a form (like adding details), you can use either GET or POST methods ; both send data to the server, but they behave differently.
+
+Use GET for searching or filtering.
+
+Use POST for saving or modifying data in your database.
+
+{% csrf_token %} → protects your form from attacks.
+
+method="POST" → sends form data to the backend to save it.
+
+Go to google --> Django --> documentation -->Cross Site Request Forgery protection --> it prevents from hacking -->just go thru the details
+
+To prevent these hackings we use this csrf token;
+
+search.html --> add post and csrf token
+
+<div class = "container w-50 text-center p-3 my-5 bg-danger">
+    <form action="" method="POST">
+        {% csrf_token %}
+    {{form|crispy}}
+    <br>
+        <button class="btn btn-primary mb-4" type="submit">Submit</button>
+        <hr>
+</form>
+</div>
+
+go to views.py --> add a dict for post;
+
+def search(request):
+    if request.method == "POST":
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            form.save()
+            
+    form = SearchForm
+    dict_form = {
+        'form':form
+    }
+    return render(request,'search.html',dict_form)
+
+save this...refresh ur page and enter the details;
+
+go to http://127.0.0.1:8000/admin
+
+We can see the object we have passed ...
+
+Now we are converting this object to a table;
+
+go to admin.py -->
+
+from django.contrib import admin
+from .models import Department,Placementcell,Search
+# Register your models here.
+
+admin.site.register(Department)
+admin.site.register(Placementcell)
+class SearchAdmin(admin.ModelAdmin):
+    list_display = ('id','student_name',
+                    'student_phonenumber',
+                    'student_email',
+                    'student_image')
+admin.site.register(Search,SearchAdmin)
+
+Now refresh ur page...
+
+Next we are going to deploy our website...
+
+Django Deploy
+--------------
+Deployment means publish your website to the internet...
+So anybody can access your website over the internet...
+
+Free hosting provider services we have;
+
+PythonAnywhere ,Amazon AWS , Heroku
+
+terminal --> pip freeze > requirements.txt
+
+Now a txt file created in our project...
+
+Go to (outer folder) studentproject --> right click -->open file explorer -->
+
+project folder --> right click -->compress to rar -->
+now rar folder created
+
+go to google --> pythonanywhere -->signup-->create a beginner account --> enter ur basic details...
+
+Username :
+Email :
+Password : djangoproject
+
+There will be a confirmation link send to ur mail id...
+
+Then select the option End Tour...
+
+Now our dashboard will display...
+
+go to files --> upload file --> upload the rar file -->now uploaded the file --> back to dashboard --> consoles --> click on Bash --> 
+
+there will be a terminal/console will display ,we can use the terminal as we used in PyCharm...
+
+enter --> pwd
+
+pwd - Print Working Directory
+
+--> ls 
+
+ls - list all the files and folders in your current directory
+
+-->unrar x studentproject.rar --> enter
+
+[if it is a zip file u can use;unzip studentproject.zip]
+
+-->clear
+-->ls
+-->cd studentproject
+-->ls
+
+It will display all the files..
+
+Now we are going to create virtual environment;
+
+Right top --> menu --> help --> open in new tab -->
+
+Web Applications and Hosting --> Basic Web App Setup --> Deploying an existing Django project on PythonAnywhere -->
+
+copy the code for create a virtualenv
+
+mkvirtualenv --python=/usr/bin/python3.10 djvenv
+
+--> clear
+--> ls
+
+db.sqlite3  manage.py  requirements.txt  static  student  studentproject  templates  uploads
+
+--> pip install -r requirements.txt
+
+all the requirements installed ...
+
+--> clear
+
+go to topright menu --> Web -->Add a new web app--> Anushya123.pythonanywhere.com. -->Next -->Manual configuration -->python 3.10 -->next -->Now we have got our web address
+
+https://Anushya123.pythonanywhere.com/ --> right click --> open in a new tab
+
+Hello, World!
+This is the default welcome page for a PythonAnywhere hosted web application.
+
+Find out more about how to configure your own web application by visiting the web app setup page
+
+Files -->right click --> open in a new tab -->search for manage.py and copy the path -->
+
+/home/Anushya123/studentproject
+
+Web --> code --> source code --> paste the path --> /home/Anushya123/studentproject --> enable the tick mark
+
+source code = manage.py
+.>
+scroll down --> virtualenv -->Enter path -->
+ 
+files -->.virtualenvs -->djvenv/ -->copy the path -->/home/Anushya123/.virtualenvs/djvenv
+
+web --> virtualenv -->Enter path --> /home/Anushya123/.virtualenvs/djvenv -->enable the tick mark
+
+Now we have created the venv...
+
+Web --> code -->WSGI configuration file
+-->open --> except Django delete all the content-->save
+
+replace the default project name with studentproject
+
+remove comments for ;
+
+# +++++++++++ DJANGO +++++++++++
+# To use your own django app use code like this:
+import os
+import sys
+#
+## assuming your django settings file is at '/home/Anushya123/mysite/mysite/settings.py'
+## and your manage.py is is at '/home/Anushya123/mysite/manage.py'
+path = '/home/Anushya123/studentproject'
+if path not in sys.path:
+    sys.path.append(path)
+#
+os.environ['DJANGO_SETTINGS_MODULE'] = 'studentproject.settings'
+#
+## then:
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
+
+save --> go back -->Web --> reload -->it will display as disallowedhost -->
+
+files --> studentproject-->settings.py --> ALLOWED_HOSTS = [] --> add ur web address -->ALLOWED_HOSTS = ['Anushya123.pythonanywhere.com'] --> save 
+
+web --> reload -->it will display as template doesn't exist
+
+files --> studentproject-->settings.py -->TEMPLATES ={   'DIRS': [BASE_DIR/'templates'],
+}
+
+web --> reload --> Now our webpage will display without CSS stylings...
+
+We have to add the static path -->
+
+files --> studentproject --> static -->copy the path --> /home/Anushya123/studentproject/static 
+
+web --> static files -->paste the path
+
+url - /static/
+Directory path - /home/Anushya123/studentproject/static
+
+files --> studentproject --> settings.py-->
+
+add --> STATIC_ROOT = BASE_DIR/'static'
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/5.2/howto/static-files/
+
+STATIC_ROOT = BASE_DIR/'static'
+STATIC_URL = 'static/'
+
+save
+
+go to bash --> python manage.py collectstatic --> yes -->
+
+web --> reload
+
+go to admin -->
+
+https://anushya123.pythonanywhere.com/admin
+
+Now we have completed our project deployment...
+-----------------------------------------------------
+
+Integrating our Django project with an SQL database
+-----------------------------------------------------
+Go to MySQL Workbench-->create a database named smsdb
+
+'CREATE DATABASE SMSB;'
+
+terminal-->
+
+If you’re using MySQL, install:pip install mysqlclient or pip install pymysql
+
+go to settings.py-->
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'smsdb',
+        'USER':'root',
+        'PASSWORD':'root',
+        'HOST':'localhost',
+        'PORT':'3306',
+    }
+}
+
+Apply migrations(Once your database connection details are set)
+
+terminal-->python manage.py makemigrations
+terminal-->python manage.py migrate
+
+This will create the required tables in your SQL database automatically.
+
+Test your connection-->Run the server-->python manage.py runserver
+
+Open the database that u have created...All the tables we can see...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
