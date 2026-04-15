@@ -1,0 +1,14 @@
+{% extends 'dummy_base.html' %}
+{% block title  %}
+Department
+{% endblock %}
+{% block content  %}
+<h1 class ="text-center"> Department Page  </h1>
+<hr style="border: 5px solid blue; width: 100%;">
+{% for d in dept %}
+<div style="color:red;" class="demo mx-auto w-50 bg-success text-center text-white p-3 my-3">
+    <h1>{{d.dep_name}}</h1>
+    <p>{{d.dep_description}}</p>
+</div>
+{% endfor %}
+{% endblock %}

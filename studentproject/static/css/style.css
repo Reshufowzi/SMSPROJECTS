@@ -1,0 +1,8 @@
+li:hover{
+    background-color:red;
+    border-radius:10px;
+    border:5px solid yellow;
+}
+.demo{
+background-color: rgb(28 25 135) !important;
+}
