@@ -12,7 +12,7 @@ pipeline {
             steps {
                 script {
                     def tag = "${BUILD_NUMBER}"
-                    sh "docker build -t $IMAGE_NAME:$tag ./SMSPROJECT/studentproject"
+                    sh "docker build -t $IMAGE_NAME:$tag ./studentproject"
                     sh "docker tag $IMAGE_NAME:$tag $IMAGE_NAME:latest"
                 }
             }
